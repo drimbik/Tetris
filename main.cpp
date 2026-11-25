@@ -14,7 +14,7 @@ const string RECORD_FILE = "record.txt";
 
 struct Figure {
     string name;
-    int color; // Код цвета для консоли Windows
+    int color; // ГЉГ®Г¤ Г¶ГўГҐГІГ  Г¤Г«Гї ГЄГ®Г­Г±Г®Г«ГЁ Windows
     int shape[4][4];
 };
 
@@ -32,7 +32,6 @@ void hideCursor() {
     SetConsoleCursorInfo(hConsole, &cursorInfo);
 }
 
-// Смена цвета текста в консоли (7 — стандартный светло-серый/белый)
 void setColor(int color) {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }
@@ -65,7 +64,6 @@ bool canMove(const Figure& fig, int field[ROWS][COLS], int nextX, int nextY) {
                 if (boardY >= ROWS || boardX < 0 || boardX >= COLS) {
                     return false;
                 }
-                // Теперь занятая клетка имеет значение > 0 (код цвета)
                 if (boardY >= 0 && field[boardY][boardX] != 0) {
                     return false;
                 }
@@ -96,7 +94,6 @@ void rotateFigure(Figure& fig, int field[ROWS][COLS], int& figX, int figY) {
     }
 }
 
-// Записываем в поле не просто 1, а код цвета фигуры
 void placeFigure(const Figure& fig, int field[ROWS][COLS], int figX, int figY) {
     for (int y = 0; y < 4; y++) {
         for (int x = 0; x < 4; x++) {
@@ -154,13 +151,13 @@ void lockAndSpawn(Figure& activeFig, Figure& nextFig, Figure figures[7], int fie
 
 void playGame(int& highScore) {
     Figure figures[7] = {
-        {"I", 11, {{0,0,0,0}, {1,1,1,1}, {0,0,0,0}, {0,0,0,0}}}, // Голубой
-        {"J", 9,  {{1,0,0,0}, {1,1,1,0}, {0,0,0,0}, {0,0,0,0}}}, // Синий
-        {"L", 6,  {{0,0,1,0}, {1,1,1,0}, {0,0,0,0}, {0,0,0,0}}}, // Оранжевый
-        {"O", 14, {{0,1,1,0}, {0,1,1,0}, {0,0,0,0}, {0,0,0,0}}}, // Жёлтый
-        {"S", 10, {{0,1,1,0}, {1,1,0,0}, {0,0,0,0}, {0,0,0,0}}}, // Зелёный
-        {"T", 13, {{0,1,0,0}, {1,1,1,0}, {0,0,0,0}, {0,0,0,0}}}, // Фиолетовый
-        {"Z", 12, {{1,1,0,0}, {0,1,1,0}, {0,0,0,0}, {0,0,0,0}}}  // Красный
+        {"I", 11, {{0,0,0,0}, {1,1,1,1}, {0,0,0,0}, {0,0,0,0}}}, // ГѓГ®Г«ГіГЎГ®Г©
+        {"J", 9,  {{1,0,0,0}, {1,1,1,0}, {0,0,0,0}, {0,0,0,0}}}, // Г‘ГЁГ­ГЁГ©
+        {"L", 6,  {{0,0,1,0}, {1,1,1,0}, {0,0,0,0}, {0,0,0,0}}}, // ГЋГ°Г Г­Г¦ГҐГўГ»Г©
+        {"O", 14, {{0,1,1,0}, {0,1,1,0}, {0,0,0,0}, {0,0,0,0}}}, // Г†ВёГ«ГІГ»Г©
+        {"S", 10, {{0,1,1,0}, {1,1,0,0}, {0,0,0,0}, {0,0,0,0}}}, // Г‡ГҐГ«ВёГ­Г»Г©
+        {"T", 13, {{0,1,0,0}, {1,1,1,0}, {0,0,0,0}, {0,0,0,0}}}, // Г”ГЁГ®Г«ГҐГІГ®ГўГ»Г©
+        {"Z", 12, {{1,1,0,0}, {0,1,1,0}, {0,0,0,0}, {0,0,0,0}}}  // ГЉГ°Г Г±Г­Г»Г©
     };
 
     while (true) {
@@ -205,7 +202,6 @@ void playGame(int& highScore) {
                 fallCounter = 0;
             }
 
-            // Отрисовка поля с учётом цвета каждой клетки
             for (int i = 0; i < ROWS; i++) {
                 setColor(7);
                 cout << '|';
@@ -213,10 +209,10 @@ void playGame(int& highScore) {
                     int fy = i - figY;
                     int fx = j - figX;
 
-                    int cellColor = field[i][j]; // Цвет из стакана (0 если пусто)
+                    int cellColor = field[i][j]; 
                     if (fy >= 0 && fy < 4 && fx >= 0 && fx < 4) {
                         if (activeFig.shape[fy][fx] == 1) {
-                            cellColor = activeFig.color; // Перекрываем цветом падающей фигуры
+                            cellColor = activeFig.color; 
                         }
                     }
 
@@ -230,7 +226,6 @@ void playGame(int& highScore) {
                 setColor(7);
                 cout << '|';
 
-                // Боковая панель с цветной следующей фигурой
                 if (i == 0) {
                     cout << "   Next:";
                 } else if (i == 1 || i == 6) {
